@@ -17,6 +17,8 @@
 # $ pip3 install flask
 
 import face_recognition
+import facerec_from_webcam
+import facerec_from_video_file
 from flask import Flask, jsonify, request, redirect
 
 # You can change this to any folder on your system
@@ -108,6 +110,16 @@ def detect_faces_in_image(file_stream):
         "is_picture_of_obama": is_obama
     }
     return jsonify(result)
+
+@app.route('/testWebCam',methods=['GET'])
+def healthWebCam():
+    facerec_from_webcam.test_webcam()
+    return jsonify({'response':'Success'})
+
+@app.route('/testVideo',methods=['GET'])
+def healthVideo():
+    facerec_from_video_file.test_video()
+    return jsonify({'response':'Success'})
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5001, debug=True)
